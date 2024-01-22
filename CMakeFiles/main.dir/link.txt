@@ -1,1 +1,0 @@
-/usr/bin/gcc -g -g CMakeFiles/main.dir/main.c.o CMakeFiles/main.dir/src/vec3.c.o CMakeFiles/main.dir/src/ray.c.o CMakeFiles/main.dir/src/sphere.c.o CMakeFiles/main.dir/src/vector.c.o CMakeFiles/main.dir/src/hittables_list.c.o CMakeFiles/main.dir/src/hitrecord.c.o -o main  -lm 
