@@ -1,4 +1,4 @@
-#include "../headers/vec3.h"
+#include "vec3.h"
 #include <math.h>
 #include <stdio.h>
 
@@ -73,16 +73,23 @@ vec3 sub(vec3 *self, vec3* other) {
     return res;
 }
 
+vec3 add_num(vec3 *self, double t) {
+    vec3 res = {{x(self) + t,
+                 y(self) + t,
+                 z(self) + t}};
+    return res;
+}
+
 vec3 mult_num(vec3 *self, double t) {
     vec3 res = {{x(self) * t,
-                       y(self) * t,
-                       z(self) * t}};
+                 y(self) * t,
+                 z(self) * t}};
     return res;
 }
 vec3 div_num(vec3 *self, double t) {
     vec3 res = {{x(self) / t,
-                       y(self) / t,
-                       z(self) / t}};
+                 y(self) / t,
+                 z(self) / t}};
     return res;
 }
 
@@ -93,7 +100,7 @@ vec3 mult(vec3 *self, vec3* other) {
     return res;
 }
 
-vec3 div(vec3 *self, vec3* other) {
+vec3 vec_div(vec3 *self, vec3* other) {
     vec3 res = {{x(self) / x(other),
                        y(self) / y(other),
                        z(self) / z(other)}};

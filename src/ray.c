@@ -1,5 +1,11 @@
-#include "../headers/ray.h"
-#include "../headers/vec3.h"
+#include "ray.h"
+
+ray initRay(point3 *orig, vec3 *direction) {
+    ray r;
+    r.origin = *orig;
+    r.direction = *direction;
+    return r;
+}
 
 point3 origin(ray *r) {
     return r->origin;

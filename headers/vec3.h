@@ -29,7 +29,8 @@ void prt(vec3 *v);
 vec3 add(vec3 *self,  vec3* other);
 vec3 sub(vec3 *self, vec3* other);
 vec3 mult(vec3 *self, vec3* other);
-vec3 div(vec3 *self, vec3* other);
+vec3 vec_div(vec3 *self, vec3* other);
+vec3 add_num(vec3 *self, double t);
 vec3 mult_num(vec3 *self, double t);
 vec3 div_num(vec3 *self, double t);
 

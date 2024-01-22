@@ -1,0 +1,3 @@
+/home/harry/Coding/C_Programs/raytracer/CMakeFiles/main.dir
+/home/harry/Coding/C_Programs/raytracer/CMakeFiles/edit_cache.dir
+/home/harry/Coding/C_Programs/raytracer/CMakeFiles/rebuild_cache.dir

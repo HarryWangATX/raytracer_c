@@ -10,6 +10,8 @@ struct ray {
 
 typedef struct ray ray;
 
+ray initRay(point3 *orig, vec3 *direction);
+
 point3 origin(ray *r);
 vec3 direction(ray *r);
 
