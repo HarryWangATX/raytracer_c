@@ -19,18 +19,20 @@ void push_back(vector *vec, void *element) {
         resizeVector(vec, ((vec->capacity == 0) ? 1 : (2 * vec->capacity)));
     }
 
-    char **destination = (char **)vec->data + vec->size * vec->element_size;
-    memcpy(destination, &element, vec->element_size);
+    // char **destination = (char **)vec->data + vec->size * vec->element_size;
+    // memcpy(destination, &element, vec->element_size);
+    vec->data[vec->size] = element;
 
     vec->size++;
 }
 
-void **list_get(vector *vec, size_t index) {
+void *list_get(vector *vec, size_t index) {
     if (index >= vec->size) return NULL;
 
-    char **address = (char **) vec->data + index * vec->element_size;
+    // char **address = (char **) vec->data + index * vec->element_size;
 
-    return (void **)address;
+    // return (void **)address;
+    return vec->data[index];
 }
 
 void free_vec(vector *vec) {

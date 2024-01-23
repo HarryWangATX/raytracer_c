@@ -18,7 +18,7 @@ void resizeVector(vector *vec, size_t new_capacity);
 
 void push_back(vector *vec, void *element);
 
-void **list_get(vector *vec, size_t index);
+void *list_get(vector *vec, size_t index);
 
 void free_vec(vector *vec);
 

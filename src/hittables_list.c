@@ -21,6 +21,21 @@ object *create_object(enum object_type type, shape obj) {
     return res;
 }
 
+void free_object(object *obj) {
+    switch (obj->type)
+    {
+    case SPHERE_TYPE:
+        free(obj->objects.s);
+        break;
+    
+    default:
+        break;
+    }
+
+    free(obj);
+}
+
+
 hittable_list initializeList() {
     hittable_list list;
     initializeVector(&(list.objects), sizeof(object *));
@@ -30,11 +45,6 @@ hittable_list initializeList() {
 hittable_list initializeListValue(object obj) {
     hittable_list list = initializeList();
     list_add(&list, &obj);
-}
-
-void clear(hittable_list *list) {
-    free_vec(&(list->objects));
-    initializeVector(&(list->objects), sizeof(object *));
 }
 
 void list_add(hittable_list *list, object *obj) {
@@ -47,7 +57,7 @@ bool list_hit(hittable_list *list, ray *r, double ray_tmin, double ray_tmax, hit
     double closest_so_far = ray_tmax;
 
     for (int cnt = 0; cnt < (list->objects).size; cnt++) {
-        object *obj = (object *)(*list_get(&list->objects, cnt));        
+        object *obj = (object *) list_get(&list->objects, cnt);        
         bool hitted = false;
         switch ((*obj).type) {
         case SPHERE_TYPE:

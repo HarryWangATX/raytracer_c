@@ -29,6 +29,11 @@ color ray_color(ray *r, hittable_list *world) {
 int main() {
     FILE *file = fopen("images/blue.ppm", "w");
 
+    if (file == NULL) {
+        perror("Couldn't open file");
+        return 1;
+    }
+
     // Image
 
     double aspect_ratio = 16.0 / 9.0;
@@ -95,6 +100,10 @@ int main() {
             color pixel_color = ray_color(&r, &world);
             write_color(file, &pixel_color);
         }
+    }
+
+    for (int cnt = 0; cnt < world.objects.size; cnt++) {
+        free((object *)list_get(&world.objects, cnt));
     }
 
     fclose(file);
