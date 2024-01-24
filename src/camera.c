@@ -61,8 +61,10 @@ color ray_color(camera *cam, ray *r, int depth, hittable_list *world) {
     if (depth <= 0)
             return initValue(0,0,0);
 
-    if (list_hit(world, r, interval_value(0, infinity), &rec)) {
-        vec3 direction = random_on_hemisphere(&rec.normal);
+    if (list_hit(world, r, interval_value(0.001, infinity), &rec)) {
+        vec3 rand_unit = random_unit_vector();
+        vec3 direction = add(&rec.normal, &rand_unit);
+        
         ray rand_ray = initRay(&rec.p, &direction);
 
         color col = ray_color(cam, &rand_ray, depth - 1, world);
