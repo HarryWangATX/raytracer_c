@@ -30,7 +30,8 @@ set(SOURCE_FILES
     src/vector.c
     src/camera.c
     src/lambertian.c 
-    src/metal.c)
+    src/metal.c
+    src/dielectric.c)
 
 # Add the executable target and specify source files
 add_executable(main main.c ${SOURCE_FILES})

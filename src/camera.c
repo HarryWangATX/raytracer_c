@@ -77,6 +77,12 @@ color ray_color(camera *cam, ray *r, int depth, hittable_list *world) {
                 return mult(&attenuation, &col);
             }
             break;
+        case DIELECTRIC:
+            if (scatter_dielectric(rec.mat->sf.dlc, r, &rec, &attenuation, &scattered)) {
+                color col = ray_color(cam, &scattered, depth - 1, world);
+                return mult(&attenuation, &col);
+            }
+            break;
         default:
             break;
         }

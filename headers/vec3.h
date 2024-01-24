@@ -51,4 +51,6 @@ vec3 random_on_hemisphere(vec3 *normal);
 bool near_zero(vec3 *vec);
 vec3 reflect(vec3 *v, vec3 *n);
 
+vec3 refract(vec3 *uv, vec3 *n, double etai_over_etat);
+
 #endif

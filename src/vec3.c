@@ -162,3 +162,13 @@ vec3 reflect(vec3 *v, vec3 *n) {
     vec3 comp = mult_num(n, 2 * dot(v, n));
     return sub(v, &comp);
 }
+
+vec3 refract(vec3 *uv, vec3 *n, double etai_over_etat) {
+    vec3 neg_uv = neg(uv);
+    double cos_theta = fmin(dot(&neg_uv, n), 1.0);
+    vec3 scaled_n = mult_num(n, cos_theta);
+    vec3 uv_scaled = add(uv, &scaled_n);
+    vec3 r_out_perp =  mult_num(&uv_scaled, etai_over_etat); // etai_over_etat * (uv + cos_theta*n);
+    vec3 r_out_parallel = mult_num(n, -sqrt(fabs(1.0 - length_squared(&r_out_perp))));
+    return add(&r_out_parallel, &r_out_perp);
+}

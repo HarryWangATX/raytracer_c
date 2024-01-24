@@ -11,6 +11,9 @@ surface create_surface(enum surface_type type, void *sf) {
     case METAL:
         union_sf.mtl = (metal *) sf;
         break;
+    case DIELECTRIC:
+        union_sf.dlc = (dielectric *) sf;
+        break;
     default:
         break;
     }
@@ -27,17 +30,5 @@ material *create_material(enum surface_type type, surface sf) {
 }
 
 void free_material(material *mat) {
-    switch (mat->type)
-    {
-    case LAMBERTIAN:
-        free(mat->sf.lbt);
-        break;
-    case METAL:
-        free(mat->sf.mtl);
-        break;
-    default:
-        break;
-    }
-
     free(mat);
 }
