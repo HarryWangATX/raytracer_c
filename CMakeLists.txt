@@ -23,11 +23,14 @@ set(SOURCE_FILES
     src/color.c
     src/ray.c
     src/intervals.c
+    src/material.c
     src/hitrecord.c
     src/hittables_list.c
     src/sphere.c
     src/vector.c
-    src/camera.c)
+    src/camera.c
+    src/lambertian.c 
+    src/metal.c)
 
 # Add the executable target and specify source files
 add_executable(main main.c ${SOURCE_FILES})

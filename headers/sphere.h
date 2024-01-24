@@ -10,12 +10,13 @@
 struct sphere {
     point3 center;
     double radius;
+    material *mat;
     bool (*hit)(struct sphere *s, ray *r, interval iv, hit_record *rec);
 };
 
 typedef struct sphere sphere;
 
-sphere *makeSphere(point3 center, double radius);
+sphere *makeSphere(point3 center, double radius, material * mat);
 bool hitSphere(sphere *s, ray *r, interval iv, hit_record *rec);
 
 #endif

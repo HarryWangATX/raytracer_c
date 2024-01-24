@@ -28,14 +28,16 @@ bool hitSphere(sphere *s, ray *r, interval iv, hit_record *rec) {
     vec3 outward_normal = sub(&rec->p, &s->center);
     outward_normal = div_num(&outward_normal, s->radius);
     set_face_normal(rec, r, &outward_normal);
+    rec->mat = s->mat;
 
     return true;
 }
 
-sphere *makeSphere(point3 center, double radius) {
+sphere *makeSphere(point3 center, double radius, material *mat) {
     sphere *s = (sphere *) malloc(sizeof(sphere));
     s->center = center;
     s->radius = radius;
+    s->mat = mat;
     s->hit = &hitSphere;
     return s;
 }

@@ -62,13 +62,26 @@ color ray_color(camera *cam, ray *r, int depth, hittable_list *world) {
             return initValue(0,0,0);
 
     if (list_hit(world, r, interval_value(0.001, infinity), &rec)) {
-        vec3 rand_unit = random_unit_vector();
-        vec3 direction = add(&rec.normal, &rand_unit);
-        
-        ray rand_ray = initRay(&rec.p, &direction);
+        ray scattered;
+        color attenuation;
+        switch (rec.mat->type) {
+        case LAMBERTIAN:
+            if (scatter_lambertian(rec.mat->sf.lbt, r, &rec, &attenuation, &scattered)) {
+                color col = ray_color(cam, &scattered, depth - 1, world);
+                return mult(&attenuation, &col);
+            }
+            break;
+        case METAL:
+            if (scatter_metal(rec.mat->sf.mtl, r, &rec, &attenuation, &scattered)) {
+                color col = ray_color(cam, &scattered, depth - 1, world);
+                return mult(&attenuation, &col);
+            }
+            break;
+        default:
+            break;
+        }
 
-        color col = ray_color(cam, &rand_ray, depth - 1, world);
-        return mult_num(&col, 0.5);
+        return initValue(0,0,0);
     }
 
     vec3 unit_direction = unit(&r->direction);

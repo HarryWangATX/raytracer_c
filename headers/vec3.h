@@ -1,6 +1,8 @@
 #ifndef VEC3_H
 #define VEC3_H
 
+#include <stdbool.h>
+
 struct vec3 {
     double e[3]; // coords
 };
@@ -45,5 +47,8 @@ vec3 random_in_unit_sphere();
 vec3 random_unit_vector();
 
 vec3 random_on_hemisphere(vec3 *normal);
+
+bool near_zero(vec3 *vec);
+vec3 reflect(vec3 *v, vec3 *n);
 
 #endif

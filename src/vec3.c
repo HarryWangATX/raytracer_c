@@ -152,3 +152,13 @@ vec3 random_on_hemisphere(vec3 *normal) {
         return neg(&on_unit_sphere);
 }
 
+bool near_zero(vec3 *vec)  {
+    // Return true if the vector is close to zero in all dimensions.
+    double s = 1e-8;
+    return (fabs(x(vec)) < s) && (fabs(y(vec)) < s) && (fabs(z(vec)) < s);
+}
+
+vec3 reflect(vec3 *v, vec3 *n) {
+    vec3 comp = mult_num(n, 2 * dot(v, n));
+    return sub(v, &comp);
+}
