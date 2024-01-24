@@ -1,7 +1,7 @@
-#include "vec3.h"
-
 #ifndef RAY_H
 #define RAY_H
+
+#include "vec3.h"
 
 struct ray {
     point3 origin;

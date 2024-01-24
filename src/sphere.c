@@ -1,10 +1,11 @@
+#include "intervals.h"
 #include "sphere.h"
 #include "hitrecord.h"
 #include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
 
-bool hitSphere(sphere *s, ray *r, double ray_tmin, double ray_tmax, hit_record *rec) {
+bool hitSphere(sphere *s, ray *r, interval iv, hit_record *rec) {
     vec3 oc = sub(&r->origin, &s->center);
     double a = length_squared(&r->direction);
     double half_b = dot(&oc, &r->direction);
@@ -16,9 +17,9 @@ bool hitSphere(sphere *s, ray *r, double ray_tmin, double ray_tmax, hit_record *
 
     // Find the nearest root that lies in the acceptable range.
     double root = (-half_b - sqrtd) / a;
-    if (root <= ray_tmin || ray_tmax <= root) {
+    if (!surrounds(&iv, root)) {
         root = (-half_b + sqrtd) / a;
-        if (root <= ray_tmin || ray_tmax <= root)
+        if (!surrounds(&iv, root))
             return false;
     }
 

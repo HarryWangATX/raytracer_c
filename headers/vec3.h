@@ -39,4 +39,11 @@ double dot(vec3 *u, vec3 *v);
 vec3 cross(vec3 *u, vec3 *v);
 vec3 unit(vec3 *v);
 
+vec3 random_vec();
+vec3 random_vec_value(double min, double max);
+vec3 random_in_unit_sphere();
+vec3 random_unit_vector();
+
+vec3 random_on_hemisphere(vec3 *normal);
+
 #endif

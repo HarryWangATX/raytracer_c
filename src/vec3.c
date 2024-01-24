@@ -1,6 +1,8 @@
 #include "vec3.h"
+#include "rt_utils.h"
 #include <math.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 vec3 initEmpty() {
     vec3 res = {{0.0, 0.0, 0.0}};
@@ -120,3 +122,33 @@ vec3 cross(vec3 *u, vec3 *v) {
 vec3 unit(vec3 *v) {
     return div_num(v, len(v));
 }
+
+vec3 random_vec() {
+    return initValue(random_double_empt(), random_double_empt(), random_double_empt());
+}
+
+vec3 random_vec_value(double min, double max) {
+    return initValue(random_double(min,max), random_double(min,max), random_double(min,max));
+}
+
+vec3 random_in_unit_sphere() {
+    while (true) {
+        vec3 p = random_vec_value(-1,1);
+        if (length_squared(&p) < 1)
+            return p;
+    }
+}
+
+vec3 random_unit_vector() {
+    vec3 rand_unit_sphere = random_in_unit_sphere();
+    return unit(&rand_unit_sphere);
+}
+
+vec3 random_on_hemisphere(vec3 *normal) {
+    vec3 on_unit_sphere = random_unit_vector();
+    if (dot(&on_unit_sphere, normal) > 0.0) // In the same hemisphere as the normal
+        return on_unit_sphere;
+    else
+        return neg(&on_unit_sphere);
+}
+

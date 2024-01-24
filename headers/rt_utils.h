@@ -2,21 +2,24 @@
 #define UTILS_H
 
 #include <math.h>
+#include <stdlib.h>
 
 // Constants
 
-const double infinity = INFINITY;
-const double pi = 3.1415926535897932385;
+extern double infinity, pi;
 
 // Utility Functions
 
-inline double degrees_to_radians(double degrees) {
-    return degrees * pi / 180.0;
-}
+double degrees_to_radians(double degrees);
+
+double random_double_empt();
+
+double random_double(double min, double max);
 
 // Common Headers
 
 #include "ray.h"
 #include "vec3.h"
+#include "intervals.h"
 
 #endif

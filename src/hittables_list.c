@@ -51,10 +51,10 @@ void list_add(hittable_list *list, object *obj) {
     push_back(&(list->objects), (void *) obj);
 }
 
-bool list_hit(hittable_list *list, ray *r, double ray_tmin, double ray_tmax, hit_record *rec) {
+bool list_hit(hittable_list *list, ray *r, interval ray_t, hit_record *rec) {
     hit_record temp_rec;
     bool hit_anything = false;
-    double closest_so_far = ray_tmax;
+    double closest_so_far = ray_t.max;
 
     for (int cnt = 0; cnt < (list->objects).size; cnt++) {
         object *obj = (object *) list_get(&list->objects, cnt);        
@@ -62,7 +62,7 @@ bool list_hit(hittable_list *list, ray *r, double ray_tmin, double ray_tmax, hit
         switch ((*obj).type) {
         case SPHERE_TYPE:
             // hitted = (*obj).objects.s->hit((*obj).objects.s, r, ray_tmin, closest_so_far, &temp_rec);
-            hitted = hitSphere((*obj).objects.s, r, ray_tmin, closest_so_far, &temp_rec);
+            hitted = hitSphere((*obj).objects.s, r, interval_value(ray_t.min, closest_so_far), &temp_rec);
             break;
         default:
             break;

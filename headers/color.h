@@ -7,11 +7,6 @@
 
 typedef struct vec3 color;
 
-void write_color(FILE *file, color *pixel_color) {
-    // Write the translated [0,255] value of each color component.
-    fprintf(file, "%d %d %d\n", (int)(255.999 * x(pixel_color)),
-                         (int)(255.999 * y(pixel_color)),
-                         (int)(255.999 * z(pixel_color)));
-}
+void write_color(FILE *file, color *pixel_color, int samples_per_pixel);
 
 #endif
