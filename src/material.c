@@ -6,13 +6,13 @@ surface create_surface(enum surface_type type, void *sf) {
     switch (type)
     {
     case LAMBERTIAN:
-        union_sf.lbt = (lambertian *) sf;
+        union_sf.lbt = *((lambertian *) sf);
         break;
     case METAL:
-        union_sf.mtl = (metal *) sf;
+        union_sf.mtl = *((metal *) sf);
         break;
     case DIELECTRIC:
-        union_sf.dlc = (dielectric *) sf;
+        union_sf.dlc = *((dielectric *) sf);
         break;
     default:
         break;

@@ -172,3 +172,11 @@ vec3 refract(vec3 *uv, vec3 *n, double etai_over_etat) {
     vec3 r_out_parallel = mult_num(n, -sqrt(fabs(1.0 - length_squared(&r_out_perp))));
     return add(&r_out_parallel, &r_out_perp);
 }
+
+vec3 random_in_unit_disk() {
+    while (true) {
+        vec3 p = initValue(random_double(-1,1), random_double(-1,1), 0);
+        if (length_squared(&p) < 1)
+            return p;
+    }
+}

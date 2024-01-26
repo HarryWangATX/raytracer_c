@@ -38,7 +38,7 @@ ray get_ray(camera *cam, int i, int j) {
     vec3 sampled = pixel_sample_square(cam);
     vec3 pixel_sample = add(&pixel_center, &sampled);
 
-    point3 ray_origin = cam->center;
+    point3 ray_origin = (cam->defocus_angle <= 0) ? cam->center : defocus_disk_sample(cam);
     vec3 ray_direction = sub(&pixel_sample, &ray_origin);
 
     return initRay(&ray_origin, &ray_direction);
@@ -100,18 +100,38 @@ color ray_color(camera *cam, ray *r, int depth, hittable_list *world) {
     return add(&comp1, &comp2);
 }
 
+point3 defocus_disk_sample(camera *cam) {
+    // Returns a random point in the camera defocus disk.
+    vec3 p = random_in_unit_disk();
+    vec3 u_comp = mult_num(&cam->defocus_disk_u, x(&p));
+    vec3 v_comp = mult_num(&cam->defocus_disk_v, y(&p));
+    vec3 total = add(&u_comp, &v_comp);
+    return add(&cam->center, &total);
+}
+
 void initialize_camera(camera *cam) {
     cam->image_height = (int)(cam->image_width / cam->aspect_ratio);
     cam->image_height = (cam->image_height < 1) ? 1 : cam->image_height;
 
-    double focal_length = 1.0;
-    double viewport_height = 2.0;
+    cam->center = cam->lookfrom;
+
+    vec3 camera_dir = sub(&cam->lookfrom, &cam->lookat);
+
+    double theta = degrees_to_radians(cam->vfov);
+    double h = tan(theta/2);
+    double viewport_height = 2 * h * cam->focus_dist;
+
     double viewport_width = viewport_height * ((double)cam->image_width/cam->image_height);
-    cam->center = initValue(0, 0, 0);
+
+    cam->w = unit(&camera_dir);
+    vec3 orth = cross(&cam->vup, &cam->w);
+    cam->u = unit(&orth);
+    cam->v = cross(&cam->w, &cam->u);
 
     // Calculate the vectors across the horizontal and down the vertical viewport edges.
-    vec3 viewport_u = initValue(viewport_width, 0, 0);
-    vec3 viewport_v = initValue(0, -viewport_height, 0);
+    vec3 viewport_u = mult_num(&cam->u, viewport_width); // initValue(viewport_width, 0, 0);
+    vec3 neg_vv = neg(&cam->v);
+    vec3 viewport_v = mult_num(&neg_vv, viewport_height); // (0, -viewport_height, 0);
 
     // Calculate the horizontal and vertical delta vectors from pixel to pixel.
     cam->pixel_delta_u = div_num(&viewport_u, cam->image_width);
@@ -124,10 +144,14 @@ void initialize_camera(camera *cam) {
     vec3 viewport_v_half = div_num(&viewport_v, 2);
     vec3 neg_u = neg(&viewport_u_half);
     vec3 neg_v = neg(&viewport_v_half);
-    vec3 focal_vec = initValue(0, 0, focal_length);
+    vec3 focal_vec = mult_num(&cam->w, cam->focus_dist);
     vec3 cam_foc = sub(&cam->center, &focal_vec);
     vec3 viewports = add(&neg_u, &neg_v);
     vec3 viewport_upper_left = add(&cam_foc, &viewports);
     // camera_center - vec3(0, 0, focal_length) - viewport_u/2 - viewport_v/2;
     cam->pixel00_loc = add(&viewport_upper_left, &pixel_sum_half);
+
+    double defocus_radius = cam->focus_dist * tan(degrees_to_radians(cam->defocus_angle / 2));
+    cam->defocus_disk_u = mult_num(&cam->u, defocus_radius);
+    cam->defocus_disk_v = mult_num(&cam->v, defocus_radius);
 }

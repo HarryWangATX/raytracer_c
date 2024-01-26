@@ -13,6 +13,6 @@ typedef struct lambertian lambertian;
 typedef struct hit_record hit_record;
 
 lambertian make_lambertian(color albedo);
-bool scatter_lambertian(lambertian *lbt, ray *r_in, hit_record *rec, color *attenuation, ray *scattered);
+bool scatter_lambertian(lambertian lbt, ray *r_in, hit_record *rec, color *attenuation, ray *scattered);
 
 #endif

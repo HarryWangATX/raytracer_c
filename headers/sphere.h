@@ -5,6 +5,7 @@
 #include "ray.h"
 #include "intervals.h"
 #include "hitrecord.h"
+#include "material.h"
 #include <stdbool.h>
 
 struct sphere {

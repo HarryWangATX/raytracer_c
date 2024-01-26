@@ -3,16 +3,15 @@
 
 #include "vec3.h"
 #include "ray.h"
-#include "material.h"
 #include <stdbool.h>
 
-typedef struct material material;
+struct material;
 
 struct hit_record {
     point3 p;
     vec3 normal;
     double t;
-    material *mat;
+    struct material *mat;
     bool front_face;
 
     // void (*set_face_normal)(bool front, ray *r, vec3 *outward_normal);

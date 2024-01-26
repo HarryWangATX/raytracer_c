@@ -1,15 +1,12 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-#include "hitrecord.h"
 #include "lambertian.h"
 #include "metal.h"
 #include "dielectric.h"
+#include "hitrecord.h"
 #include <stdbool.h>
 
-typedef struct lambertian lambertian;
-typedef struct metal metal;
-typedef struct dielectric dielectric;
 
 
 enum surface_type {
@@ -19,9 +16,9 @@ enum surface_type {
 };
 
 union surface {
-    lambertian *lbt;
-    metal *mtl;
-    dielectric *dlc;
+    lambertian lbt;
+    metal mtl;
+    dielectric dlc;
 };
 
 typedef union surface surface;

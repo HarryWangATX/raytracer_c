@@ -2,9 +2,9 @@
 #include "rt_utils.h"
 #include <math.h>
 
-bool scatter_dielectric(dielectric *dlc, ray *r_in, hit_record *rec, color *attenuation, ray *scattered) {
+bool scatter_dielectric(dielectric dlc, ray *r_in, hit_record *rec, color *attenuation, ray *scattered) {
     *attenuation = initValue(1.0, 1.0, 1.0);
-    double refraction_ratio = rec->front_face ? (1.0/dlc->ir) : dlc->ir;
+    double refraction_ratio = rec->front_face ? (1.0/dlc.ir) : dlc.ir;
 
     vec3 unit_direction = unit(&r_in->direction);
     vec3 neg_unit_direction = neg(&unit_direction);
