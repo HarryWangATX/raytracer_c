@@ -40,8 +40,9 @@ ray get_ray(camera *cam, int i, int j) {
 
     point3 ray_origin = (cam->defocus_angle <= 0) ? cam->center : defocus_disk_sample(cam);
     vec3 ray_direction = sub(&pixel_sample, &ray_origin);
+    double ray_time = random_double_empt();
 
-    return initRay(&ray_origin, &ray_direction);
+    return initRayTime(&ray_origin, &ray_direction, ray_time);
 }
 
 vec3 pixel_sample_square(camera *cam) {

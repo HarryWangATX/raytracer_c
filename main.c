@@ -59,6 +59,10 @@ int main() {
 
             if (len(&sub_res) > 0.9) {
                 if (choose_mat < 0.8) {
+                    vec3 rand_vec_3 = initValue(0, random_double(0, 0.5), 0);
+                    point3 center2 = add(&center, &rand_vec_3);
+                    
+
                     // diffuse
                     vec3 rand_vec = random_vec();
                     vec3 rand_vec_2 = random_vec();
@@ -66,7 +70,7 @@ int main() {
                     lambertian sphere_material = make_lambertian(albedo);
                     material *material_sphere = create_material(LAMBERTIAN, create_surface(LAMBERTIAN, &sphere_material)); 
                     push_back(&materials, material_sphere);
-                    object *sphere_lamb = create_object(SPHERE_TYPE, create_shape(SPHERE_TYPE, (void *) makeSphere(center, 0.2, material_sphere)));
+                    object *sphere_lamb = create_object(SPHERE_TYPE, create_shape(SPHERE_TYPE, (void *) makeSphereMoving(center, center2, 0.2, material_sphere)));
                     list_add(&world, sphere_lamb);
                 } else if (choose_mat < 0.95) {
                     // metal
@@ -91,7 +95,7 @@ int main() {
 
 
 
-    camera cam = {.aspect_ratio = 16.0/9.0, .image_width = 1200, .samples_per_pixel = 500, .max_depth = 50, .vfov = 20, .lookfrom = {{13, 2, 3}},
+    camera cam = {.aspect_ratio = 16.0/9.0, .image_width = 400, .samples_per_pixel = 100, .max_depth = 50, .vfov = 20, .lookfrom = {{13, 2, 3}},
                   .lookat = {{0, 0, 0}}, .vup = {{0, 1, 0}}, .defocus_angle = 0.6, .focus_dist = 10.0};
 
     render(&cam, &world, file);

@@ -7,6 +7,10 @@ set(CMAKE_C_COMPILER gcc)
 project(RayTracer C)
 
 include_directories(headers)
+include_directories(headers/basic)
+include_directories(headers/materials)
+include_directories(headers/shapes)
+include_directories(headers/utils)
 
 # Set the build type to Debug
 # set(CMAKE_BUILD_TYPE Debug)
@@ -18,20 +22,20 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3")
 
 # Add all .c files in the src/ directory
 set(SOURCE_FILES
-    src/rt_utils.c
-    src/vec3.c
-    src/color.c
-    src/ray.c
-    src/intervals.c
-    src/hitrecord.c
-    src/hittables_list.c
-    src/lambertian.c 
-    src/metal.c
-    src/dielectric.c
-    src/sphere.c
-    src/vector.c
+    src/utils/rt_utils.c
+    src/basic/vec3.c
+    src/basic/color.c
+    src/basic/ray.c
+    src/utils/intervals.c
+    src/utils/hitrecord.c
+    src/utils/hittables_list.c
+    src/materials/lambertian.c 
+    src/materials/metal.c
+    src/materials/dielectric.c
+    src/shapes/sphere.c
+    src/basic/vector.c
     src/camera.c
-    src/material.c)
+    src/materials/material.c)
 
 # Add the executable target and specify source files
 add_executable(main main.c ${SOURCE_FILES})
