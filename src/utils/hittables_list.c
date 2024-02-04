@@ -2,11 +2,17 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+typedef struct bvh_node bvh_node;
+bool bvh_hit(bvh_node *bvh, ray *r, interval iv, hit_record *hit_record);
+
 shape create_shape(enum object_type type, void *sh) {
     shape shp;
     switch (type){
     case SPHERE_TYPE:
         shp.s = (sphere *) sh;
+        break;
+    case BVH_TYPE:
+        shp.bvh = (bvh_node *) sh;
         break;
     default:
         break;
@@ -47,6 +53,10 @@ hittable_list initializeListValue(object obj) {
     list_add(&list, &obj);
 }
 
+aabb hittableBoundingBox(hittable_list *list) {
+    return list->bbox;
+}
+
 void list_add(hittable_list *list, object *obj) {
     push_back(&(list->objects), (void *) obj);
     switch (obj->type) {
@@ -72,6 +82,8 @@ bool list_hit(hittable_list *list, ray *r, interval ray_t, hit_record *rec) {
             // hitted = (*obj).objects.s->hit((*obj).objects.s, r, ray_tmin, closest_so_far, &temp_rec);
             hitted = hitSphere((*obj).objects.s, r, interval_value(ray_t.min, closest_so_far), &temp_rec);
             break;
+        case BVH_TYPE:
+            hitted = bvh_hit((*obj).objects.bvh, r, interval_value(ray_t.min, closest_so_far), &temp_rec);
         default:
             break;
         }

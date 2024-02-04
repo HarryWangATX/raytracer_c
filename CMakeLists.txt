@@ -8,6 +8,7 @@ project(RayTracer C)
 
 include_directories(headers)
 include_directories(headers/basic)
+include_directories(headers/bvh)
 include_directories(headers/materials)
 include_directories(headers/shapes)
 include_directories(headers/utils)
@@ -18,7 +19,7 @@ include_directories(headers/utils)
 # Add the -g flag for debugging information
 # set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0 -g")
 
 # Add all .c files in the src/ directory
 set(SOURCE_FILES
@@ -35,7 +36,9 @@ set(SOURCE_FILES
     src/shapes/sphere.c
     src/basic/vector.c
     src/camera.c
-    src/materials/material.c)
+    src/materials/material.c
+    src/utils/aabb.c
+    src/bvh/bvh.c)
 
 # Add the executable target and specify source files
 add_executable(main main.c ${SOURCE_FILES})

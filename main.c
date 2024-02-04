@@ -4,13 +4,14 @@
 #include "hittables_list.h"
 #include "sphere.h"
 #include "material.h"
+#include "bvh.h"
 
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
 
 int main() {
-    FILE *file = fopen("images/blue.ppm", "w");
+    FILE *file = fopen("images/bvh_image.ppm", "w");
 
     if (file == NULL) {
         perror("Couldn't open file");
@@ -93,12 +94,16 @@ int main() {
         }
     }
 
-
+    bvh_node *bvh = (bvh_node *) malloc(sizeof(bvh_node));
+    constructBVHBuild(bvh, &world, 0, world.objects.size);
+    hittable_list bvh_world = initializeList();
+    object *bvh_obj = create_object(BVH_TYPE, create_shape(BVH_TYPE, (void *) bvh));
+    list_add(&bvh_world, bvh_obj);
 
     camera cam = {.aspect_ratio = 16.0/9.0, .image_width = 400, .samples_per_pixel = 100, .max_depth = 50, .vfov = 20, .lookfrom = {{13, 2, 3}},
                   .lookat = {{0, 0, 0}}, .vup = {{0, 1, 0}}, .defocus_angle = 0.6, .focus_dist = 10.0};
 
-    render(&cam, &world, file);
+    render(&cam, &bvh_world, file);
 
     for (int cnt = 0; cnt < world.objects.size; cnt++) {
         free_object((object *)list_get(&world.objects, cnt));

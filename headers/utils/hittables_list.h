@@ -7,21 +7,7 @@
 #include "sphere.h"
 #include "aabb.h"
 #include "stdbool.h"
-
-enum object_type {
-    SPHERE_TYPE
-};
-
-union shape {
-    sphere *s;
-};
-
-typedef union shape shape;
-
-struct object {
-    enum object_type type;
-    shape objects;
-};
+#include "object.h"
 
 struct hittable_list {
     vector objects;
@@ -29,7 +15,6 @@ struct hittable_list {
 };
 
 typedef struct hittable_list hittable_list;
-typedef struct object object;
 
 shape create_shape(enum object_type type, void *sh);
 object *create_object(enum object_type type, shape obj);
@@ -37,6 +22,8 @@ void free_object(object *obj);
 
 hittable_list initializeList();
 hittable_list initializeListValue(object obj);
+
+aabb hittableBoundingBox(hittable_list *list);
 
 void list_add(hittable_list *list, object *obj);
 bool list_hit(hittable_list *list, ray *r, interval ray_t, hit_record *rec);

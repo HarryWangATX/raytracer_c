@@ -18,6 +18,8 @@ void resizeVector(vector *vec, size_t new_capacity);
 
 void push_back(vector *vec, void *element);
 
+void insert_into(vector *vec, void *element, size_t ix);
+
 void *list_get(vector *vec, size_t index);
 
 void free_vec(vector *vec);

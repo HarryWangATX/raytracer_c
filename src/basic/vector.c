@@ -26,6 +26,13 @@ void push_back(vector *vec, void *element) {
     vec->size++;
 }
 
+void insert_into(vector *vec, void *element, size_t ix) {
+    if (ix >= vec->capacity) return ;
+
+    vec->data[ix] = element;
+    if (ix == vec->size) vec->size++;
+}
+
 void *list_get(vector *vec, size_t index) {
     if (index >= vec->size) return NULL;
 
